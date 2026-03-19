@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PublishAot>true</PublishAot>
+    <NativeLib>Shared</NativeLib>
+    <AssemblyName>PoorMansTSqlFormatterNppPlugin</AssemblyName>
+    <RootNamespace>PoorMansTSqlFormatterNppPlugin</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Version>2.0.0</Version>
+    <AssemblyTitle>PoorMansTSqlFormatterNppPlugin</AssemblyTitle>
+    <Product>PoorMansTSqlFormatterNppPlugin</Product>
+    <Copyright>Copyright (C) 2011-2024 Tao Klerks</Copyright>
+    <Description>A simple free (AGPL) T-SQL Formatting Plugin for Notepad++, built on .NET 8 NativeAOT.</Description>
+
+    <!-- NativeAOT trimming settings -->
+    <TrimMode>link</TrimMode>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- Link in the shared formatter library source files -->
+  <ItemGroup>
+    <Compile Include="..\PoorMansTSqlFormatterLibShared\**\*.cs" LinkBase="FormatterLib" />
+  </ItemGroup>
+
+  <!-- Exclude the NetUtils.cs from the main lib project if it gets pulled in -->
+  <ItemGroup>
+    <Compile Remove="..\PoorMansTSqlFormatterLib\**" />
+  </ItemGroup>
+
+</Project>
