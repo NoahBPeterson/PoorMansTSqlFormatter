@@ -19,26 +19,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace PoorMansTSqlFormatterNppPlugin
 {
     public static class NativeExports
     {
-        [UnmanagedCallersOnly(EntryPoint = "isUnicode")]
+        [UnmanagedCallersOnly(EntryPoint = "isUnicode", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static int IsUnicode()
         {
-            return 1; // true
+            return 1; // BOOL TRUE
         }
 
-        [UnmanagedCallersOnly(EntryPoint = "setInfo")]
+        [UnmanagedCallersOnly(EntryPoint = "setInfo", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static unsafe void SetInfo(NppData notepadPlusData)
         {
             PluginBase.nppData = notepadPlusData;
             Main.CommandMenuInit();
         }
 
-        [UnmanagedCallersOnly(EntryPoint = "getFuncsArray")]
+        [UnmanagedCallersOnly(EntryPoint = "getFuncsArray", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static unsafe IntPtr GetFuncsArray(int* nbF)
         {
             IntPtr result = PluginBase.GetNativeFuncItemsPointer(out int count);
@@ -46,7 +47,7 @@ namespace PoorMansTSqlFormatterNppPlugin
             return result;
         }
 
-        [UnmanagedCallersOnly(EntryPoint = "messageProc")]
+        [UnmanagedCallersOnly(EntryPoint = "messageProc", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static uint MessageProc(uint message, IntPtr wParam, IntPtr lParam)
         {
             return 1;
@@ -54,7 +55,7 @@ namespace PoorMansTSqlFormatterNppPlugin
 
         private static IntPtr _ptrPluginName = IntPtr.Zero;
 
-        [UnmanagedCallersOnly(EntryPoint = "getName")]
+        [UnmanagedCallersOnly(EntryPoint = "getName", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static IntPtr GetName()
         {
             if (_ptrPluginName == IntPtr.Zero)
@@ -62,7 +63,7 @@ namespace PoorMansTSqlFormatterNppPlugin
             return _ptrPluginName;
         }
 
-        [UnmanagedCallersOnly(EntryPoint = "beNotified")]
+        [UnmanagedCallersOnly(EntryPoint = "beNotified", CallConvs = new[] { typeof(CallConvCdecl) })]
         public static unsafe void BeNotified(SCNotification* notifyCode)
         {
             uint code = notifyCode->nmhdr.code;
